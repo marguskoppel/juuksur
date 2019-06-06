@@ -4,7 +4,7 @@
 
 <jsp:include page="/WEB-INF/pages/master/header_master.jsp" />
 <main class="page registration-page">
-    <section class="clean-block clean-form dark">
+    <section class="clean-block clean-form">
         <div class="container">
             <div class="block-heading">
                 <h2 class="text-info">Редактирование лимита</h2>

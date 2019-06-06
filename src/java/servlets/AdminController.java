@@ -191,7 +191,8 @@ public class AdminController extends HttpServlet {
                 Service servDelete = serviceFacade.find(new Long(idServDelete));
                 servDelete.setActive(false);
                 serviceFacade.edit(servDelete);
-
+                
+                request.setAttribute("info", "Услуга деактивирована удачно!");
                 request.setAttribute("services", serviceFacade.findActived(true));
 
                 request.getRequestDispatcher(PageReturner.getPage("addservices")).forward(request, response);
@@ -201,6 +202,7 @@ public class AdminController extends HttpServlet {
                 String idServAct = request.getParameter("serv_id");
                 Service actService = serviceFacade.find(new Long(idServAct));
                 request.setAttribute("actService", actService);
+                
 
                 request.setAttribute("services", serviceFacade.findAll());
 
@@ -211,6 +213,7 @@ public class AdminController extends HttpServlet {
                 Service activateService = serviceFacade.find(new Long(idServActivate));
                 activateService.setActive(true);
                 serviceFacade.edit(activateService);
+                request.setAttribute("info", "Услуга активирована удачно!");
 
                 request.setAttribute("services", serviceFacade.findActived(true));
 
@@ -335,6 +338,7 @@ public class AdminController extends HttpServlet {
                 break;
 
             case "/user_notactive":
+                request.setAttribute("users_notactive", userRolesFacade.findAll());
                 request.setAttribute("users", userFacade.findActive(false));
 
                 request.getRequestDispatcher(PageReturner.getPage("user_notactive")).forward(request, response);

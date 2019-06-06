@@ -15,7 +15,7 @@
             </div>
             <div class="table-responsive">
 
-                <table class="table table-hover" style="margin-bottom: 50px">
+                <table class="table table-hover table-striped" style="margin-bottom: 50px">
                     <thead style="background-color: #5295dc;">
                         <tr>
                             <th scope="col">Логин</th>
@@ -36,7 +36,7 @@
                             <td>${userinfo.surname}</td>
                             <td>${userinfo.email}</td>
                             <td>${userinfo.phone}</td>                               
-                            <td><a title='Изменить' href="userinfoedit?eu=${userinfo.id}"><i class="far fa-edit"></i></a></td>
+                            <td><a title='Изменить' href="userinfoedit?eu=${userinfo.id}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i>Изменить</button></a></td>
 
                         </tr>
 

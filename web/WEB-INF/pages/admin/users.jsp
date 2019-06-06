@@ -25,21 +25,23 @@
                             <th scope="col">Логин</th>
                             <th scope="col">Данные пользователь</th>
                             <th class="sorttable_nosort" scope="col">Роль</th>
-                            <th class="sorttable_nosort" scope="col">Управление</th>
+                            <th class="sorttable_nosort" scope="col" style="width:28%;">Управление</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="master" items="${listMasters}">
-                            <tr>
+                            <c:if test="${master.user.active == true}">
+                                <tr>
 
-                                <td>${master.user.login}</td>
-                                <td><a tabindex="0" data-toggle="popover" data-trigger="focus" title="Работник" data-html="true" data-content="Имя/Фамилия: <b>${master.user.name} ${master.user.surname}</b> <br><br> Телефон: <b>${master.user.phone}</b><br><br> Е-майл: <b>${master.user.email}</b>">${master.user.name} ${master.user.surname}</a></td>
-                                <td>${master.role.name}</td>
+                                    <td>${master.user.login}</td>
+                                    <td><a tabindex="0" data-toggle="popover" data-trigger="focus" title="Работник" data-html="true" data-content="Имя/Фамилия: <b>${master.user.name} ${master.user.surname}</b> <br><br> Телефон: <b>${master.user.phone}</b><br><br> Е-майл: <b>${master.user.email}</b>">${master.user.name} ${master.user.surname}</a></td>
+                                    <td>${master.role.name}</td>
 
-                                <td><a title='Изменение' href="edituser?user_id=${master.user.id}"><i class="fas fa-edit"></i></a> <a title='Деактивирование' href="deleteuser?user_id=${master.user.id}"><i class="far fa-trash-alt"></i></a></td>
+                                    <td><a title='Изменение' href="edituser?user_id=${master.user.id}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i>Изменить</button></a></a> <a title='Деактивирование' href="deleteuser?user_id=${master.user.id}"> <button type="button" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i>Деактивировать</button></a></td>
 
-                            </tr>
+                                </tr>
+                            </c:if>
 
                         </c:forEach>
                     </tbody>
@@ -64,22 +66,23 @@
                             <th scope="col">Логин</th>
                             <th scope="col">Данные пользователь</th>
                             <th class="sorttable_nosort" scope="col">Роль</th>
-                            <th class="sorttable_nosort" scope="col">Управление</th>
+                            <th class="sorttable_nosort" scope="col" style="width:28%;">Управление</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="worker" items="${listWorkers}">
-                            <tr>
+                            <c:if test="${worker.user.active == true}">
+                                <tr>
 
-                                <td>${worker.user.login}</td>
-                                <td><a tabindex="0" data-toggle="popover" data-trigger="focus" title="Работник" data-html="true" data-content="Имя/Фамилия: <b>${worker.user.name} ${worker.user.surname}</b> <br><br> Телефон: <b>${worker.user.phone}</b><br><br> Е-майл: <b>${worker.user.email}</b>">${worker.user.name} ${worker.user.surname}</a></td>
-                                <td>${worker.role.name}</td>
+                                    <td>${worker.user.login}</td>
+                                    <td><a tabindex="0" data-toggle="popover" data-trigger="focus" title="Работник" data-html="true" data-content="Имя/Фамилия: <b>${worker.user.name} ${worker.user.surname}</b> <br><br> Телефон: <b>${worker.user.phone}</b><br><br> Е-майл: <b>${worker.user.email}</b>">${worker.user.name} ${worker.user.surname}</a></td>
+                                    <td>${worker.role.name}</td>
 
-                                <td><a title='Изменение' href="edituser?user_id=${worker.user.id}"><i class="fas fa-edit"></i></a> <a title='Деактивирование' href="deleteuser?user_id=${worker.user.id}"><i class="far fa-trash-alt"></i></a></td>
+                                    <td><a title='Изменение' href="edituser?user_id=${worker.user.id}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i>Изменить</button></a></a> <a title='Деактивирование' href="deleteuser?user_id=${worker.user.id}"> <button type="button" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i>Деактивировать</button></a></td>
 
-                            </tr>
-
+                                </tr>
+                            </c:if>
                         </c:forEach>
                     </tbody>
                 </table>
@@ -101,22 +104,23 @@
                             <th scope="col">Логин</th>
                             <th scope="col">Данные пользователь</th>
                             <th class="sorttable_nosort" scope="col">Роль</th>
-                            <th class="sorttable_nosort" scope="col">Управление</th>
+                            <th class="sorttable_nosort" scope="col" style="width:28%;">Управление</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="user" items="${listUsers2}">
-                            <tr>
+                            <c:if test="${worker.user.active == true}">
+                                <tr>
 
-                                <td>${user.user.login}</td>
-                                <td><a tabindex="0" data-toggle="popover" data-trigger="focus" title="Работник" data-html="true" data-content="Имя/Фамилия: <b>${user.user.name} ${user.user.surname}</b> <br><br> Телефон: <b>${user.user.phone}</b><br><br> Е-майл: <b>${user.user.email}</b>">${user.user.name} ${user.user.surname}</a></td>
-                                <td>${user.role.name}</td>
+                                    <td>${user.user.login}</td>
+                                    <td><a tabindex="0" data-toggle="popover" data-trigger="focus" title="Работник" data-html="true" data-content="Имя/Фамилия: <b>${user.user.name} ${user.user.surname}</b> <br><br> Телефон: <b>${user.user.phone}</b><br><br> Е-майл: <b>${user.user.email}</b>">${user.user.name} ${user.user.surname}</a></td>
+                                    <td>${user.role.name}</td>
 
-                                <td><a title='Изменение' href="edituser?user_id=${user.user.id}"><i class="fas fa-edit"></i></a> <a title='Деактивирование' href="deleteuser?user_id=${user.user.id}"><i class="far fa-trash-alt"></i></a></td>
+                                    <td><a title='Изменение' href="edituser?user_id=${user.user.id}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i>Изменить</button></a></a> <a title='Деактивирование' href="deleteuser?user_id=${user.user.id}"> <button type="button" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i>Деактивировать</button></a></td>
 
-                            </tr>
-
+                                </tr>
+                            </c:if>
                         </c:forEach>
                     </tbody>
                 </table>

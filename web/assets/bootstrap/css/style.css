@@ -55,5 +55,8 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
       background-color: #007bff;
     background: linear-gradient(to bottom, #007bff 0%, #248cfd 100%);
   }
-  
+  table{
+      border-radius: 10px;
+      overflow: hidden;
+  }
  

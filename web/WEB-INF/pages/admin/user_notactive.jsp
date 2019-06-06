@@ -3,7 +3,7 @@
 
 <jsp:include page="/WEB-INF/pages/admin/header_admin.jsp" />
 <main class="page contact-us-page">
-    <section class="clean-block clean-form dark">
+    <section class="clean-block clean-form">
         <div class="container">
             <div class="block-heading">
                 <h2 class="text-info">Активирование пользователя</h2>
@@ -17,23 +17,22 @@
                 <thead style="background-color: #5295dc;">
                     <tr>
                         <th scope="col">Логин</th>
-                        <th scope="col">Имя</th>
-                        <th scope="col">Фамилия</th>
-                        <th scope="col">Телефон</th>
-                        <th scope="col">Е-майл</th>
+                        <th scope="col">Пользователь</th>
+                        
+                        <th scope="col">Роль</th>
                         <th class="sorttable_nosort" scope="col">Активировать</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="user" items="${users}">
+                    <c:forEach var="user" items="${users_notactive}">
+                        <c:if test="${user.user.active == false}">
                         <tr>
-                            <td>${user.login}</td>
-                            <td>${user.name}</td>
-                            <td>${user.surname}</td>
-                            <td>${user.phone}</td>
-                            <td>${user.email}</td>
-                            <td><a title='Активировать' href="activateuser?user_id=${user.id}"><i class="fas fa-power-off"></i></a> 
+                            <td>${user.user.login}</td>
+                            <td><a tabindex="0" data-toggle="popover" data-trigger="focus" title="Работник" data-html="true" data-content="Имя/Фамилия: <b>${user.user.name} ${user.user.surname}</b> <br><br> Телефон: <b>${user.user.phone}</b><br><br> Е-майл: <b>${user.user.email}</b>">${user.user.name} ${user.user.surname}</a></td>
+                            <td>${user.role.name}</td>
+                            <td><a title='Активировать' href="activateuser?user_id=${user.user.id}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-power-off"></i>Активировать</button></a></i></a> 
                         </tr>
+                        </c:if>
                     </c:forEach>
 
                 </tbody>

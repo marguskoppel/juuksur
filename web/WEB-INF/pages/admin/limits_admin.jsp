@@ -38,7 +38,7 @@
                         
                         <th scope="col">Число(дата)</th>
                         <th scope="col">Допустимое количество записей</th>
-                        <th class="sorttable_nosort" scope="col">Управление</th>
+                        <th class="sorttable_nosort" scope="col" >Управление</th>
 
                     </tr>
                 </thead>
@@ -48,7 +48,7 @@
 
                             <td><fmt:formatDate value="${limitApp.userdate}" pattern="dd-MM-yyyy" /></td>
                             <td>${limitApp.count}</td>
-                            <td><a title='Изменить' href="editlimit?limit_id=${limitApp.id}"><i class="fas fa-edit"></i></a> </td>
+                            <td><a title='Изменить' href="editlimit?limit_id=${limitApp.id}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i>Изменить</button></a> </td>
 
                         </tr>
                     </c:forEach>

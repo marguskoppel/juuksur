@@ -21,7 +21,7 @@
             </form>
         </div>
     </section>
-    <section class="clean-block clean-pricing dark">
+    <section class="clean-block clean-pricing">
         <div class="container">
             <div class="block-heading">
                 <h2 class="text-info">Услуги и цены</h2>
@@ -30,12 +30,12 @@
 
             </div>
 
-            <table class="table table-hover sortable table-striped" style="margin-bottom: 50px">
+            <table id="addbewservice_admin" class="display table table-hover table-striped" style="margin-bottom: 50px">
                 <thead style="background-color: #5295dc;">
                     <tr>
-                        <th scope="col" style="width:80%;">Услига</th>
+                        <th scope="col">Услига</th>
                         <th scope="col">Цена</th>
-                        <th class="sorttable_nosort" scope="col">Управление</th>
+                        <th class="sorttable_nosort" scope="col" style="width:28%;">Управление</th>
 
                     </tr>
                 </thead>
@@ -44,8 +44,8 @@
                         <tr>
 
                             <td>${serv.name}</td>
-                            <td>${serv.price} €</td>
-                            <td><a title='Изменить' href="editservice?serv_id=${serv.id}"><i class="fas fa-edit"></i></a> <a title='Деактивировать' href="deleteservice?serv_id=${serv.id}"><i class="far fa-trash-alt"></i></a></td>
+                            <td>${serv.price} €</td><!---->
+                            <td><a title='Изменить' href="editservice?serv_id=${serv.id}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i>Изменить</button></a> <a title='Деактивировать' href="deleteservice?serv_id=${serv.id}"><button type="button" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i>Деактивировать</button></a></td>
 
                         </tr>
                     </c:forEach>

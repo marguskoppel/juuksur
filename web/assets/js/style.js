@@ -180,7 +180,7 @@ $(document).ready(function () {
 
     });
     $('#statistics_admin_workers').DataTable({
-        
+
         language: {
             "processing": "Подождите...",
             "search": "Поиск:",
@@ -206,54 +206,54 @@ $(document).ready(function () {
         }
 
     });
-    
-     $('#workerstat_admin_services').DataTable({
-         
-            footerCallback: function (row, data, start, end, display) {
-                var counter = 0;
-                var api = this.api(), data;
+
+    $('#workerstat_admin_services').DataTable({
+
+        footerCallback: function (row, data, start, end, display) {
+            var counter = 0;
+            var api = this.api(), data;
 
 
-                var intVal = function (i) {
-                    return typeof i === 'string' ?
-                            i.replace(/[\$,]/g, '') * 1 :
-                            typeof i === 'number' ?
-                            i : 0;
-                };
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+            };
 
 
-                if (counter === 0) {
-                    counter = data.length;
-                }
-                // Total over all pages
-                total = api
-                        .column(1)
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
+            if (counter === 0) {
+                counter = data.length;
+            }
+            // Total over all pages
+            total = api
+                    .column(1)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
 
-                // Total over this page
-                pageTotal = api
-                        .column(1, {page: 'current'})
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
+            // Total over this page
+            pageTotal = api
+                    .column(1, {page: 'current'})
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
 
 
-                pageData = api
-                        .column(1, {page: 'current'})
-                        .data();
-                // Update footer
-                $(api.column(0).footer()).html(
-                        'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
-                        );
-                $(api.column(1).footer()).html(
-                        'Сумма: ' + parseFloat(pageTotal).toFixed(2) + ' &euro;' + ' (всего ' + parseFloat(total).toFixed(2) + ' &euro;)'
-                        );
+            pageData = api
+                    .column(1, {page: 'current'})
+                    .data();
+            // Update footer
+            $(api.column(0).footer()).html(
+                    'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
+                    );
+            $(api.column(1).footer()).html(
+                    'Сумма: ' + parseFloat(pageTotal).toFixed(2) + ' &euro;' + ' (всего ' + parseFloat(total).toFixed(2) + ' &euro;)'
+                    );
 
-            },
+        },
         language: {
             "processing": "Подождите...",
             "search": "Поиск:",
@@ -279,8 +279,8 @@ $(document).ready(function () {
         }
 
     });
-    
-    
+
+
     $('#usernotactive_admin').DataTable({
         language: {
             "processing": "Подождите...",
@@ -790,12 +790,21 @@ $(document).ready(function () {
             pageData = api
                     .column(4, {page: 'current'})
                     .data();
+
+
+            var average_mark = 0;
+            if (isNaN(parseFloat(total / data.length).toFixed(2))) {
+                average_mark = 0;
+
+            } else {
+                average_mark = parseFloat(total / data.length);
+            }
             // Update footer
             $(api.column(2).footer()).html(
                     'Записи с оценкой: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
                     );
             $(api.column(4).footer()).html(
-                    'Средняя оценка: ' + parseFloat(total / data.length).toFixed(2)
+                    'Средняя оценка: ' + average_mark.toFixed(2)
                     );
 
         },
@@ -825,9 +834,9 @@ $(document).ready(function () {
 
 
     });
-    
-    
-    
+
+
+
     $('#workerstat_master').DataTable({
         footerCallback: function (row, data, start, end, display) {
             var counter = 0;
@@ -947,12 +956,20 @@ $(document).ready(function () {
             pageData = api
                     .column(4, {page: 'current'})
                     .data();
+
+            var average_mark = 0;
+            if (isNaN(parseFloat(total / data.length).toFixed(2))) {
+                average_mark = 0;
+
+            } else {
+                average_mark = parseFloat(total / data.length);
+            }
             // Update footer
             $(api.column(2).footer()).html(
                     'Записи с оценкой: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
                     );
             $(api.column(4).footer()).html(
-                    'Средняя оценка: ' + parseFloat(total / data.length).toFixed(2)
+                    'Средняя оценка: ' + average_mark.toFixed(2)
                     );
 
         },
@@ -982,14 +999,14 @@ $(document).ready(function () {
 
 
     });
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     $(function () {
         var start = moment().subtract(29, 'days');
         var end = moment();
@@ -1303,289 +1320,479 @@ $(document).ready(function () {
         table2.draw();
     });
     var table2 = $('#workerstat_admin_appointments2').DataTable({
-         footerCallback: function (row, data, start, end, display) {
-         var counter = 0;
-         var api = this.api(), data;
-         
-
-
-
-        // Remove the formatting to get integer data for summation
-        /* var intVal = function (i) {
-         
-         if (typeof i === 'string') {
-         i = i.replace(/[\£,]/g, '') * 1;
-         
-         }
-         // check if you got a valid number.
-         if (Number.isNaN(i)) {
-         counter = counter + 1;
-         
-         return '';
-         }
-         return i;
-         };*/
+        footerCallback: function (row, data, start, end, display) {
+            var counter = 0;
+            var api = this.api(), data;
 
 
 
 
-          
-         var intVal = function (i) {
-         return typeof i === 'string' ?
-         i.replace(/[\$,]/g, '') * 1 :
-         typeof i === 'number' ?
-         i : 0;
-         };
-         
-         
-         if (counter === 0) {
-         counter = data.length;
-         }
-         // Total over all pages
-         total = api
-         .column(1)
-         .data()
-         .reduce(function (a, b) {
-         return intVal(a) + intVal(b);
-         }, 0);
-         
-         // Total over this page
-         pageTotal = api
-         .column(1, {page: 'current'})
-         .data()
-         .reduce(function (a, b) {
-         return intVal(a) + intVal(b);
-         }, 0);
-         
-         
-         pageData = api
-         .column(1, {page: 'current'})
-         .data();
-         // Update footer
-         $(api.column(3).footer()).html(
-         'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
-         );
-         $(api.column(1).footer()).html(
-         'Сумма: ' + pageTotal + ' &euro;' + ' (всего ' + total + ' &euro;)'
-         );
-         
-         },
-         language: {
-         "processing": "Подождите...",
-         "search": "Поиск:",
-         "lengthMenu": "Показать _MENU_ записей",
-         "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
-         "infoEmpty": "Записи с 0 до 0 из 0 записей",
-         "infoFiltered": "(отфильтровано из _MAX_ записей)",
-         "infoPostFix": "",
-         "loadingRecords": "Загрузка записей...",
-         "zeroRecords": "Записи отсутствуют.",
-         "emptyTable": "В таблице отсутствуют данные",
-         "paginate": {
-         "first": "Первая",
-         "previous": "Предыдущая",
-         "next": "Следующая",
-         "last": "Последняя"
-         },
-         "aria": {
-         "sortAscending": ": активировать для сортировки столбца по возрастанию",
-         "sortDescending": ": активировать для сортировки столбца по убыванию"
-         }
-         
-         }
-         
-         
+            // Remove the formatting to get integer data for summation
+            /* var intVal = function (i) {
+             
+             if (typeof i === 'string') {
+             i = i.replace(/[\£,]/g, '') * 1;
+             
+             }
+             // check if you got a valid number.
+             if (Number.isNaN(i)) {
+             counter = counter + 1;
+             
+             return '';
+             }
+             return i;
+             };*/
+
+
+
+
+
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+            };
+
+
+            if (counter === 0) {
+                counter = data.length;
+            }
+            // Total over all pages
+            total = api
+                    .column(1)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+            // Total over this page
+            pageTotal = api
+                    .column(1, {page: 'current'})
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+
+            pageData = api
+                    .column(1, {page: 'current'})
+                    .data();
+            // Update footer
+            $(api.column(3).footer()).html(
+                    'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
+                    );
+            $(api.column(1).footer()).html(
+                    'Сумма: ' + pageTotal + ' &euro;' + ' (всего ' + total + ' &euro;)'
+                    );
+
+        },
+        language: {
+            "processing": "Подождите...",
+            "search": "Поиск:",
+            "lengthMenu": "Показать _MENU_ записей",
+            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+            "infoEmpty": "Записи с 0 до 0 из 0 записей",
+            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "infoPostFix": "",
+            "loadingRecords": "Загрузка записей...",
+            "zeroRecords": "Записи отсутствуют.",
+            "emptyTable": "В таблице отсутствуют данные",
+            "paginate": {
+                "first": "Первая",
+                "previous": "Предыдущая",
+                "next": "Следующая",
+                "last": "Последняя"
+            },
+            "aria": {
+                "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                "sortDescending": ": активировать для сортировки столбца по убыванию"
+            }
+
+        }
+
+
     });
-    
-    
+
+
     $('#workerstat_admin_appointments_range').DataTable({
-         footerCallback: function (row, data, start, end, display) {
-         var counter = 0;
-         var api = this.api(), data;
-         
-
-
-
-        // Remove the formatting to get integer data for summation
-        /* var intVal = function (i) {
-         
-         if (typeof i === 'string') {
-         i = i.replace(/[\£,]/g, '') * 1;
-         
-         }
-         // check if you got a valid number.
-         if (Number.isNaN(i)) {
-         counter = counter + 1;
-         
-         return '';
-         }
-         return i;
-         };*/
+        footerCallback: function (row, data, start, end, display) {
+            var counter = 0;
+            var api = this.api(), data;
 
 
 
 
-          
-         var intVal = function (i) {
-         return typeof i === 'string' ?
-         i.replace(/[\$,]/g, '') * 1 :
-         typeof i === 'number' ?
-         i : 0;
-         };
-         
-         
-         if (counter === 0) {
-         counter = data.length;
-         }
-         // Total over all pages
-         total = api
-         .column(1)
-         .data()
-         .reduce(function (a, b) {
-         return intVal(a) + intVal(b);
-         }, 0);
-         
-         // Total over this page
-         pageTotal = api
-         .column(1, {page: 'current'})
-         .data()
-         .reduce(function (a, b) {
-         return intVal(a) + intVal(b);
-         }, 0);
-         
-         
-         pageData = api
-         .column(1, {page: 'current'})
-         .data();
-         // Update footer
-         $(api.column(3).footer()).html(
-         'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
-         );
-         $(api.column(1).footer()).html(
-         'Сумма: ' + parseFloat(pageTotal).toFixed(2) + ' &euro;' + ' (всего ' + parseFloat(total).toFixed(2) + ' &euro;)'
-         );
-         
-         },
-         language: {
-         "processing": "Подождите...",
-         "search": "Поиск:",
-         "lengthMenu": "Показать _MENU_ записей",
-         "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
-         "infoEmpty": "Записи с 0 до 0 из 0 записей",
-         "infoFiltered": "(отфильтровано из _MAX_ записей)",
-         "infoPostFix": "",
-         "loadingRecords": "Загрузка записей...",
-         "zeroRecords": "Записи отсутствуют.",
-         "emptyTable": "В таблице отсутствуют данные",
-         "paginate": {
-         "first": "Первая",
-         "previous": "Предыдущая",
-         "next": "Следующая",
-         "last": "Последняя"
-         },
-         "aria": {
-         "sortAscending": ": активировать для сортировки столбца по возрастанию",
-         "sortDescending": ": активировать для сортировки столбца по убыванию"
-         }
-         
-         }
-         
-         
+            // Remove the formatting to get integer data for summation
+            /* var intVal = function (i) {
+             
+             if (typeof i === 'string') {
+             i = i.replace(/[\£,]/g, '') * 1;
+             
+             }
+             // check if you got a valid number.
+             if (Number.isNaN(i)) {
+             counter = counter + 1;
+             
+             return '';
+             }
+             return i;
+             };*/
+
+
+
+
+
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+            };
+
+
+            if (counter === 0) {
+                counter = data.length;
+            }
+            // Total over all pages
+            total = api
+                    .column(1)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+            // Total over this page
+            pageTotal = api
+                    .column(1, {page: 'current'})
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+
+            pageData = api
+                    .column(1, {page: 'current'})
+                    .data();
+            // Update footer
+            $(api.column(3).footer()).html(
+                    'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
+                    );
+            $(api.column(1).footer()).html(
+                    'Сумма: ' + parseFloat(pageTotal).toFixed(2) + ' &euro;' + ' (всего ' + parseFloat(total).toFixed(2) + ' &euro;)'
+                    );
+
+        },
+        language: {
+            "processing": "Подождите...",
+            "search": "Поиск:",
+            "lengthMenu": "Показать _MENU_ записей",
+            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+            "infoEmpty": "Записи с 0 до 0 из 0 записей",
+            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "infoPostFix": "",
+            "loadingRecords": "Загрузка записей...",
+            "zeroRecords": "Записи отсутствуют.",
+            "emptyTable": "В таблице отсутствуют данные",
+            "paginate": {
+                "first": "Первая",
+                "previous": "Предыдущая",
+                "next": "Следующая",
+                "last": "Последняя"
+            },
+            "aria": {
+                "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                "sortDescending": ": активировать для сортировки столбца по убыванию"
+            }
+
+        }
+
+
     });
-    
+
+    $('#addbewservice_admin').DataTable({
+        footerCallback: function (row, data, start, end, display) {
+            var counter = 0;
+            var api = this.api(), data;
+
+
+
+
+            // Remove the formatting to get integer data for summation
+            /* var intVal = function (i) {
+             
+             if (typeof i === 'string') {
+             i = i.replace(/[\£,]/g, '') * 1;
+             
+             }
+             // check if you got a valid number.
+             if (Number.isNaN(i)) {
+             counter = counter + 1;
+             
+             return '';
+             }
+             return i;
+             };*/
+
+
+
+
+
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+            };
+
+
+            if (counter === 0) {
+                counter = data.length;
+            }
+            // Total over all pages
+            total = api
+                    .column(1)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+            // Total over this page
+            pageTotal = api
+                    .column(1, {page: 'current'})
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+
+            pageData = api
+                    .column(1, {page: 'current'})
+                    .data();
+            // Update footer
+            /*$(api.column(3).footer()).html(
+             'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
+             );
+             $(api.column(1).footer()).html(
+             'Сумма: ' + parseFloat(pageTotal).toFixed(2) + ' &euro;' + ' (всего ' + parseFloat(total).toFixed(2) + ' &euro;)'
+             );*/
+
+        },
+        language: {
+            "processing": "Подождите...",
+            "search": "Поиск:",
+            "lengthMenu": "Показать _MENU_ записей",
+            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+            "infoEmpty": "Записи с 0 до 0 из 0 записей",
+            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "infoPostFix": "",
+            "loadingRecords": "Загрузка записей...",
+            "zeroRecords": "Записи отсутствуют.",
+            "emptyTable": "В таблице отсутствуют данные",
+            "paginate": {
+                "first": "Первая",
+                "previous": "Предыдущая",
+                "next": "Следующая",
+                "last": "Последняя"
+            },
+            "aria": {
+                "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                "sortDescending": ": активировать для сортировки столбца по убыванию"
+            }
+
+        }
+
+
+    });
+
+    $('#service_notactive_admin').DataTable({
+        footerCallback: function (row, data, start, end, display) {
+            var counter = 0;
+            var api = this.api(), data;
+
+
+
+
+            // Remove the formatting to get integer data for summation
+            /* var intVal = function (i) {
+             
+             if (typeof i === 'string') {
+             i = i.replace(/[\£,]/g, '') * 1;
+             
+             }
+             // check if you got a valid number.
+             if (Number.isNaN(i)) {
+             counter = counter + 1;
+             
+             return '';
+             }
+             return i;
+             };*/
+
+
+
+
+
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+            };
+
+
+            if (counter === 0) {
+                counter = data.length;
+            }
+            // Total over all pages
+            total = api
+                    .column(1)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+            // Total over this page
+            pageTotal = api
+                    .column(1, {page: 'current'})
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+
+            pageData = api
+                    .column(1, {page: 'current'})
+                    .data();
+            // Update footer
+            /*$(api.column(3).footer()).html(
+             'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
+             );
+             $(api.column(1).footer()).html(
+             'Сумма: ' + parseFloat(pageTotal).toFixed(2) + ' &euro;' + ' (всего ' + parseFloat(total).toFixed(2) + ' &euro;)'
+             );*/
+
+        },
+        language: {
+            "processing": "Подождите...",
+            "search": "Поиск:",
+            "lengthMenu": "Показать _MENU_ записей",
+            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+            "infoEmpty": "Записи с 0 до 0 из 0 записей",
+            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "infoPostFix": "",
+            "loadingRecords": "Загрузка записей...",
+            "zeroRecords": "Записи отсутствуют.",
+            "emptyTable": "В таблице отсутствуют данные",
+            "paginate": {
+                "first": "Первая",
+                "previous": "Предыдущая",
+                "next": "Следующая",
+                "last": "Последняя"
+            },
+            "aria": {
+                "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                "sortDescending": ": активировать для сортировки столбца по убыванию"
+            }
+
+        }
+
+
+    });
+
     $('#workerstat_master_appointments_range').DataTable({
-         footerCallback: function (row, data, start, end, display) {
-         var counter = 0;
-         var api = this.api(), data;
-         
-
-
-
-        // Remove the formatting to get integer data for summation
-        /* var intVal = function (i) {
-         
-         if (typeof i === 'string') {
-         i = i.replace(/[\£,]/g, '') * 1;
-         
-         }
-         // check if you got a valid number.
-         if (Number.isNaN(i)) {
-         counter = counter + 1;
-         
-         return '';
-         }
-         return i;
-         };*/
+        footerCallback: function (row, data, start, end, display) {
+            var counter = 0;
+            var api = this.api(), data;
 
 
 
 
-          
-         var intVal = function (i) {
-         return typeof i === 'string' ?
-         i.replace(/[\$,]/g, '') * 1 :
-         typeof i === 'number' ?
-         i : 0;
-         };
-         
-         
-         if (counter === 0) {
-         counter = data.length;
-         }
-         // Total over all pages
-         total = api
-         .column(1)
-         .data()
-         .reduce(function (a, b) {
-         return intVal(a) + intVal(b);
-         }, 0);
-         
-         // Total over this page
-         pageTotal = api
-         .column(1, {page: 'current'})
-         .data()
-         .reduce(function (a, b) {
-         return intVal(a) + intVal(b);
-         }, 0);
-         
-         
-         pageData = api
-         .column(1, {page: 'current'})
-         .data();
-         // Update footer
-         $(api.column(3).footer()).html(
-         'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
-         );
-         $(api.column(1).footer()).html(
-         'Сумма: ' + parseFloat(pageTotal).toFixed(2) + ' &euro;' + ' (всего ' + parseFloat(total).toFixed(2) + ' &euro;)'
-         );
-         
-         },
-         language: {
-         "processing": "Подождите...",
-         "search": "Поиск:",
-         "lengthMenu": "Показать _MENU_ записей",
-         "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
-         "infoEmpty": "Записи с 0 до 0 из 0 записей",
-         "infoFiltered": "(отфильтровано из _MAX_ записей)",
-         "infoPostFix": "",
-         "loadingRecords": "Загрузка записей...",
-         "zeroRecords": "Записи отсутствуют.",
-         "emptyTable": "В таблице отсутствуют данные",
-         "paginate": {
-         "first": "Первая",
-         "previous": "Предыдущая",
-         "next": "Следующая",
-         "last": "Последняя"
-         },
-         "aria": {
-         "sortAscending": ": активировать для сортировки столбца по возрастанию",
-         "sortDescending": ": активировать для сортировки столбца по убыванию"
-         }
-         
-         }
-         
-         
+            // Remove the formatting to get integer data for summation
+            /* var intVal = function (i) {
+             
+             if (typeof i === 'string') {
+             i = i.replace(/[\£,]/g, '') * 1;
+             
+             }
+             // check if you got a valid number.
+             if (Number.isNaN(i)) {
+             counter = counter + 1;
+             
+             return '';
+             }
+             return i;
+             };*/
+
+
+
+
+
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+            };
+
+
+            if (counter === 0) {
+                counter = data.length;
+            }
+            // Total over all pages
+            total = api
+                    .column(1)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+            // Total over this page
+            pageTotal = api
+                    .column(1, {page: 'current'})
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+
+            pageData = api
+                    .column(1, {page: 'current'})
+                    .data();
+            // Update footer
+            $(api.column(3).footer()).html(
+                    'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
+                    );
+            $(api.column(1).footer()).html(
+                    'Сумма: ' + parseFloat(pageTotal).toFixed(2) + ' &euro;' + ' (всего ' + parseFloat(total).toFixed(2) + ' &euro;)'
+                    );
+
+        },
+        language: {
+            "processing": "Подождите...",
+            "search": "Поиск:",
+            "lengthMenu": "Показать _MENU_ записей",
+            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+            "infoEmpty": "Записи с 0 до 0 из 0 записей",
+            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "infoPostFix": "",
+            "loadingRecords": "Загрузка записей...",
+            "zeroRecords": "Записи отсутствуют.",
+            "emptyTable": "В таблице отсутствуют данные",
+            "paginate": {
+                "first": "Первая",
+                "previous": "Предыдущая",
+                "next": "Следующая",
+                "last": "Последняя"
+            },
+            "aria": {
+                "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                "sortDescending": ": активировать для сортировки столбца по убыванию"
+            }
+
+        }
+
+
     });
 });
 

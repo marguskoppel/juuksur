@@ -14,7 +14,7 @@
 
             </div>
             <div class="table-responsive">
-                <table class="table table-hover sortable table-striped" style="margin-bottom: 50px">
+                <table id="service_notactive_admin" class="display table table-hover table-striped" style="margin-bottom: 50px">
                     <thead style="background-color: #5295dc;">
                         <tr>
                             <th scope="col" style="width:80%;">Услуга</th>
@@ -27,7 +27,7 @@
                             <tr>
                                 <td>${serv.name}</td>
                                 <td>${serv.price}</td>
-                                <td><a title='Активировать' href="activateservice?serv_id=${serv.id}"><i class="fas fa-power-off"></i></a> 
+                                <td><a title='Активировать' href="activateservice?serv_id=${serv.id}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-power-off"></i>Активировать</button></a> 
                             </tr>
                         </c:forEach>
 
