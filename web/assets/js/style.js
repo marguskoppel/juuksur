@@ -1218,7 +1218,7 @@ $(document).ready(function () {
                         'Записи: на странице ' + pageData.count() + ' (всего ' + data.length + ')'
                         );
                 $(api.column(1).footer()).html(
-                        'Сумма: ' + pageTotal + ' &euro;' + ' (всего ' + total + ' &euro;)'
+                        'Сумма: ' + pageTotal.toFixed(2) + ' &euro;' + ' (всего ' + total.toFixed(2) + ' &euro;)'
                         );
 
             },
